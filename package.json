@@ -1,5 +1,5 @@
 {
-  "name": "eles",
+  "name": "electron-vue-windows-demo",
   "version": "0.0.0",
   "author": "huang <2374266244@qq.com>",
   "description": "An electron-vue project",
@@ -22,7 +22,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "eles",
+    "productName": "electron-vue-windows-demo",
     "appId": "org.simulatedgreg.electron-vue",
     "directories": {
       "output": "build"

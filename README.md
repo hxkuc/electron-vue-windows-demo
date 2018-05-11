@@ -1,4 +1,4 @@
-# eles
+# electron-vue-windows-demo
 
 > An electron-vue project
 
