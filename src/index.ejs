@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="htmlClass">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>美易通</title>
+    <% if (htmlWebpackPlugin.options.nodeModules) { %>
+      <!-- Add `node_modules/` to global paths so `require` works properly in development -->
+      <script>
+        require('module').globalPaths.push('<%= htmlWebpackPlugin.options.nodeModules.replace(/\\/g, '\\\\') %>')
+      </script>
+    <% } %>
+    <style>
+        .htmlClass{
+            font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+            padding:5px;
+            box-sizing:border-box;
+            height:100%;
+            width:100%;
+        }
+        .bodyClass{
+            height:100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0);
+            color:#fff;
+            margin:0px;
+            padding:0px;
+            -webkit-user-select: none;
+            box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        .fullWindow{
+            background: #fff;
+            border-radius: 3px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .header{
+            background: #105267;
+            height:30px;
+            -webkit-app-region: drag;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            padding: 2px;
+        }
+        .rightIcon{
+            float:right;
+            font-size: 18px;
+            padding: 5px 0px 5px 4px;
+            cursor: pointer;
+            -webkit-app-region: no-drag;
+        }
+        .rightIcon:hover{
+            color: #ff001a;
+        }
+        .rightIconLast{
+            padding-right: 5px;
+        }
+        #app{
+            width: 100%;
+            height: 100%
+        }
+        h1,h2,h3,h4,h5,h6,p{
+            margin: 0px;
+            padding: 0px;
+        }
+        ::-webkit-scrollbar{width:2px;height:8px;}
+        ::-webkit-scrollbar-track{background-color:#bee1eb;}
+        ::-webkit-scrollbar-thumb{background-color:#00aff0;}
+        ::-webkit-scrollbar-thumb:hover {background-color:#9c3}
+        ::-webkit-scrollbar-thumb:active {background-color:#00aff0}
+    </style>
+</head>
+
+<body class="bodyClass" ondragstart="return false" ondrop ="return false" ondragover="return false">
+
+<div class="fullWindow">
+    <div class="header">
+        <i onclick="closeWindow()" class="rightIconLast rightIcon iconfont el-icon-h-guanbi1"></i>
+        <!-- <i onclick="fullWindow()" class="rightIcon iconfont el-icon-h-zuidahua"></i> -->
+        <i onclick="hideWindow()" class="rightIcon iconfont el-icon-h-zuixiaohua"></i>
+    </div>
+    <div style="width:100%;height:100%;overflow-y: auto; word-break: break-all;border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;">
+        <div id="app">
+            <div style="display: flex;justify-content: center;align-items: center;width:100%; height: 100%;color: green;font-size: 12px">
+                正在加载中...
+            </div>
+        </div>
+    </div>
+    <!--<div style="text-align: center;font-size: 11px;padding: 2px;">2018@上海国际雅兰-美易通</div>-->
+
+    
+</div>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+</body>
+
+<script type="text/javascript">
+if (process.env.NODE_ENV !== 'development') window.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+
+const electron = require('electron')
+const win = electron.remote.getCurrentWindow()
+
+win.on('maximize', function () {
+    let html = document.getElementsByTagName('html')[0]
+    html.style.padding = '0px'
+    win.setMovable(false)
+})
+
+win.on('unmaximize', function () {
+    let html = document.getElementsByTagName('html')[0]
+    html.style.padding = '5px'
+    win.setMovable(true)
+})
+
+function closeWindow () {
+    win.close()
+}
+function fullWindow () {
+    let html = document.getElementsByTagName('html')[0]
+    if (!html.style.padding || html.style.padding == '5px') {
+        html.style.padding = '0px'
+        win.maximize()
+        win.setMovable(false)
+    } else {
+        html.style.padding = '5px'
+        win.unmaximize()
+        win.setMovable(true)
+    }
+}
+function hideWindow () {
+    if (win.isMinimized()) {
+        win.restore()
+    } else {
+        win.minimize()
+    }
+}
+</script>
+</html>
