@@ -17,13 +17,12 @@
 
       <div class="right-side">
         <div class="doc">
-          <div class="title">Getting Started</div>
-          <p>
-            electron-vue comes packed with detailed documentation that covers everything from
-            internal configurations, using the project structure, building your application,
-            and so much more.
-          </p>
-          <button >Read the Docs</button><br><br>
+          <div class="title">只接收窗口win1发送过来的数据</div>
+          <textarea  :value="win1Info" cols="30" rows="3"></textarea>
+          <div class="title">只接收窗口win2发送过来的数据</div>
+          <textarea  :value="win2Info" cols="30" rows="3"></textarea>
+          <div class="title">接收所有窗口发送过来的数据</div>
+          <textarea  :value="winInfo" cols="30" rows="3"></textarea>
         </div>
       </div>
     </main>
@@ -35,7 +34,10 @@
     name: 'landing-page',
     data () {
       return {
-        backData: ''
+        backData: '',
+        win1Info: '',
+        win2Info: '',
+        winInfo: ''
       }
     },
     methods: {
@@ -69,10 +71,26 @@
           height: 600,
           router: '/dataWindow',
           name: name,
-          data: {name: name}
+          data: {name: '我是参数'}
         })
         this.backData = data
       }
+    },
+    mounted: function () {
+      // 监听来自win1的信息
+      this.$Win.getMsg((d) => {
+        this.win1Info += '来自' + d.fromWinName + '的信息：' + d.data + '\r\n'
+      }, ['win1'])
+
+      // 监听来自win2的信息
+      this.$Win.getMsg((d) => {
+        this.win2Info += '来自' + d.fromWinName + '的信息：' + d.data + '\r\n'
+      }, ['win2'])
+
+      // 接收所有窗口的信息
+      this.$Win.getMsg((d) => {
+        this.winInfo += '来自' + d.fromWinName + '的信息：' + d.data + '\r\n'
+      })
     }
   }
 </script>
@@ -163,5 +181,21 @@
     color: #42b983;
     font-size: .8em;
     margin-left: 5px
+  }
+
+  textarea {
+    display: block;
+    resize: vertical;
+    padding: 5px 15px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: inherit;
+    color: #606266;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
   }
 </style>

@@ -4,7 +4,7 @@
     <main>
       <div class="left-side">
         <span class="title">
-          Welcome to your new project!
+          <button class="alt" @click="sendMsg">发送数据</button>
         </span>
       </div>
     </main>
@@ -15,6 +15,9 @@
   export default {
     name: 'landing-page',
     methods: {
+      sendMsg () {
+        this.$Win.sendMsg('我来了')
+      }
     }
   }
 </script>
@@ -83,7 +86,7 @@
     margin-bottom: 10px;
   }
 
-  .doc button {
+  button {
     font-size: .8em;
     cursor: pointer;
     outline: none;

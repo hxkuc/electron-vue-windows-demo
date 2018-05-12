@@ -3,8 +3,10 @@
     <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
     <main>
       <div class="left-side doc">
+        <p><span class="title">此窗口的名字为： {{windowName}}</span></p>
         <p><span class="title">获取的页面传参： {{parameter.name}}</span></p>
         <p><input type="text" v-model="inputValue" class="inputClass"><button class="alt" @click="closeWin">关闭窗口并且返回数据</button></p>
+        <p><button class="alt" @click="sendMsg">发送数据</button></p>
       </div>
     </main>
   </div>
@@ -16,16 +18,21 @@
     data () {
       return {
         parameter: '',
-        inputValue: ''
+        inputValue: '',
+        windowName: ''
       }
     },
     methods: {
       closeWin () {
         this.$Win.closeWin(this.inputValue)
+      },
+      sendMsg () {
+        this.$Win.sendMsg({name: 1111})
       }
     },
     mounted: function () {
       this.parameter = this.$Win.getParameter()
+      this.windowName = this.$Win.getThisWindowName()
     }
   }
 </script>
